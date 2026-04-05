@@ -796,6 +796,45 @@ f(x,y) =│   ⋮         ⋮       ⋱        ⋮        │
         └                                        ┘
 ```
 
+### Linear Indexing (Important for Programming)
+
+For an M×N image, converting 2D coordinates (x,y) to linear index:
+
+```
+s = x + M × y     (column-major order)
+   OR
+s = y + N × x     (row-major order)
+```
+
+**Inverse (linear index to 2D):**
+```
+For column-major:
+x = s mod M
+y = s div M       (integer division)
+
+For row-major:
+y = s mod N
+x = s div N
+```
+
+**Example:** For a 5×4 image (M=5, N=4), pixel at (2,3):
+- Column-major: s = 2 + 5×3 = 17
+- Row-major: s = 3 + 4×2 = 11
+
+### Coordinate Conventions
+
+**Image coordinate system:**
+```
+    (0,0)────────────▶ y (columns)
+      │
+      │
+      │
+      ▼
+      x (rows)
+```
+
+**Note:** This differs from standard Cartesian coordinates where y increases upward.
+
 ### Storage Requirements
 
 ```
@@ -990,6 +1029,44 @@ Uses 16 nearest neighbors (4×4 grid):
 | Nearest | 1 | Low | Fastest | Speed-critical, pixel art |
 | Bilinear | 4 | Medium | Medium | General use |
 | Bicubic | 16 | High | Slowest | High-quality resizing |
+
+### Image Zooming and Shrinking
+
+**Zooming (Upsampling):**
+1. Create larger grid with new pixel locations
+2. Map new locations back to original image
+3. Interpolate values using nearest/bilinear/bicubic
+
+**Shrinking (Downsampling):**
+1. Create smaller grid
+2. Sample or average original pixels
+3. May cause aliasing if not done properly
+
+**Zoom Factor:**
+```
+New dimensions = Original dimensions × Zoom factor
+
+For zoom factor k:
+- k > 1: Enlargement (zooming in)
+- k < 1: Shrinking (zooming out)
+- k = 1: No change
+```
+
+**Anti-aliasing for Shrinking:**
+- Apply lowpass filter before downsampling
+- Prevents high frequencies from causing aliasing
+
+### Standard Image Sizes (Common in Exams)
+
+| Name | Dimensions | Total Pixels | 8-bit Storage |
+|------|------------|--------------|---------------|
+| QVGA | 320×240 | 76,800 | 75 KB |
+| VGA | 640×480 | 307,200 | 300 KB |
+| SVGA | 800×600 | 480,000 | 469 KB |
+| XGA | 1024×768 | 786,432 | 768 KB |
+| HD 720p | 1280×720 | 921,600 | 900 KB |
+| HD 1080p | 1920×1080 | 2,073,600 | 2 MB |
+| 4K UHD | 3840×2160 | 8,294,400 | 8 MB |
 
 ---
 
@@ -1596,6 +1673,59 @@ Where: j = √(-1)
 - Separable: Can compute as two 1-D transforms
 - Symmetric: Forward and inverse have similar form
 - Converts spatial domain to frequency domain
+
+### Separable and Symmetric Kernels
+
+**Separable Kernel:** A 2-D kernel is separable if it can be written as:
+```
+w(x,y) = w₁(x) × w₂(y)
+```
+
+**Symmetric Kernel:** A kernel is symmetric if:
+```
+w(x,y) = w(y,x)
+```
+
+**Importance:** For separable kernels, 2-D transforms can be computed efficiently:
+1. Apply 1-D transform to each row
+2. Apply 1-D transform to each column of the result
+
+**Computational Savings:**
+- Direct 2-D: O(M²N²) operations
+- Separable: O(MN(M+N)) operations
+
+**Example:** The Gaussian kernel is separable:
+```
+G(x,y) = e^(-(x²+y²)/2σ²) = e^(-x²/2σ²) × e^(-y²/2σ²)
+```
+
+### Image Subtraction Applications
+
+**Digital Subtraction Angiography (DSA):**
+```
+g(x,y) = f(x,y) - h(x,y)
+
+Where:
+- h(x,y) = mask image (before contrast injection)
+- f(x,y) = live image (after contrast injection)
+- g(x,y) = difference showing blood vessels
+```
+
+**Change Detection:**
+- Subtract images taken at different times
+- Non-zero values indicate changes/motion
+
+### Scaling Output Values
+
+After arithmetic operations, pixel values may exceed valid range [0, L-1].
+
+**Scaling Formula:**
+```
+Step 1: g_m = g - min(g)           (shift to make minimum = 0)
+Step 2: g_s = K × [g_m / max(g_m)] (scale to range [0, K])
+
+For 8-bit output: K = 255
+```
 
 ---
 
@@ -2378,6 +2508,66 @@ Time = 230,400,000 / (5 × 10⁶) = 46.08 seconds
 - (c) Both
 - (d) Neither
 
+**76.** Linear indexing converts (x,y) to index s using (column-major):
+- (a) s = x × M + y
+- (b) s = x + M × y ✓
+- (c) s = y × N + x
+- (d) s = x × y
+
+**77.** A separable kernel can be written as:
+- (a) w(x,y) = w(x) + w(y)
+- (b) w(x,y) = w₁(x) × w₂(y) ✓
+- (c) w(x,y) = w(x) - w(y)
+- (d) w(x,y) = w(x) / w(y)
+
+**78.** The recursive averaging formula is:
+- (a) a(k+1) = a(k) + f(k+1)
+- (b) a(k+1) = [k×a(k) + f(k+1)]/(k+1) ✓
+- (c) a(k+1) = a(k) × f(k+1)
+- (d) a(k+1) = [a(k) + f(k+1)]/2
+
+**79.** Digital Subtraction Angiography uses:
+- (a) Image addition
+- (b) Image subtraction ✓
+- (c) Image multiplication
+- (d) Image division
+
+**80.** To shrink an image without aliasing, first apply:
+- (a) Highpass filter
+- (b) Lowpass filter ✓
+- (c) Bandpass filter
+- (d) No filter needed
+
+**81.** The computational advantage of separable kernels is:
+- (a) O(MN) instead of O(M²N²)
+- (b) O(MN(M+N)) instead of O(M²N²) ✓
+- (c) O(log MN) instead of O(MN)
+- (d) No advantage
+
+**82.** 1080p HD resolution is:
+- (a) 1280×720
+- (b) 1920×1080 ✓
+- (c) 3840×2160
+- (d) 640×480
+
+**83.** The Gaussian kernel is:
+- (a) Separable only
+- (b) Symmetric only
+- (c) Both separable and symmetric ✓
+- (d) Neither separable nor symmetric
+
+**84.** After image subtraction, values may be negative. To display, we:
+- (a) Take absolute value
+- (b) Scale and shift to [0, L-1] ✓
+- (c) Ignore negative values
+- (d) Multiply by -1
+
+**85.** A partially ordered set must be:
+- (a) Reflexive, symmetric, transitive
+- (b) Reflexive, transitive, antisymmetric ✓
+- (c) Reflexive only
+- (d) Transitive only
+
 ---
 
 # Short Answer Questions
@@ -2556,6 +2746,18 @@ E[ḡ(x,y)] = E[(1/K)Σgᵢ]
 
 **Conclusion:** Averaging K images reduces noise standard deviation by √K.
 
+**Recursive Averaging Formula (Problem 2.25):**
+```
+a(k+1) = (k × a(k) + f(k+1)) / (k+1)
+
+Where:
+- a(k) = average of first k images
+- f(k+1) = the (k+1)th image
+- a(k+1) = new average including (k+1)th image
+```
+
+This allows computing running average without storing all images!
+
 ---
 
 ### Q11: State and prove DeMorgan's Laws.
@@ -2674,6 +2876,162 @@ Vertical: y' = sh·x + y
 | Response speed | Fast | Slow |
 
 **Significance:** Different receptors optimize vision for different conditions.
+
+---
+
+## Additional Practice Problems (From Textbook)
+
+### Problem: CCD Camera Resolution (Similar to 2.6)
+**Question:** A CCD camera chip of dimensions 7×7 mm with 1024×1024 sensing elements is focused on a flat area 0.5 m away. The camera has a 35-mm lens. How many line pairs per mm can this camera resolve?
+
+**Solution:**
+```
+Using similar triangles (imaging geometry):
+Object size/Object distance = Image size/Focal length
+
+Let S = size of area imaged
+S/500 = 7/35
+S = 500 × 7/35 = 100 mm
+
+Resolution on object:
+Pixels per mm on object = 1024/100 = 10.24 pixels/mm
+
+Line pairs per mm = 10.24/2 = 5.12 lp/mm
+```
+
+---
+
+### Problem: HDTV Storage (Similar to 2.10)
+**Question:** HDTV has 1125 lines with 16:9 aspect ratio, 24 bits per pixel (color). Calculate storage for a 2-hour movie at 30 fps.
+
+**Solution:**
+```
+Vertical resolution: 1125 lines
+Horizontal resolution: 1125 × (16/9) = 2000 pixels
+Pixels per frame: 1125 × 2000 = 2,250,000
+
+Bits per frame: 2,250,000 × 24 = 54,000,000 bits
+
+Frames in 2 hours: 2 × 60 × 60 × 30 = 216,000 frames
+
+Total bits: 216,000 × 54,000,000 = 11.664 × 10¹² bits
+         = 1.458 × 10¹² bytes
+         ≈ 1.46 TB
+```
+
+---
+
+### Problem: Path Algorithm (Similar to 2.15)
+**Question:** Develop an algorithm to convert an 8-path to a 4-path.
+
+**Solution:**
+```
+Algorithm:
+1. Start with 8-connected path P
+2. For each diagonal move (x,y) → (x±1, y±1):
+   a. Replace with two 4-connected moves:
+      (x,y) → (x±1, y) → (x±1, y±1)
+      OR
+      (x,y) → (x, y±1) → (x±1, y±1)
+   b. Choose the intermediate pixel that has
+      a valid value (in set V)
+3. Result is a 4-connected path
+```
+
+---
+
+### Problem: Proving Linearity of Summation (Similar to 2.22)
+**Question:** Show that the neighborhood sum operation is linear.
+
+**Solution:**
+```
+Let H[f] = Σ f(r,c) for (r,c) in neighborhood Sxy
+
+For linearity: H[af₁ + bf₂] = aH[f₁] + bH[f₂]
+
+H[af₁ + bf₂] = Σ [af₁(r,c) + bf₂(r,c)]
+             = Σ af₁(r,c) + Σ bf₂(r,c)
+             = a Σ f₁(r,c) + b Σ f₂(r,c)
+             = aH[f₁] + bH[f₂]  ✓
+
+Therefore, summation is a linear operation.
+```
+
+---
+
+### Problem: Set Expressions (Similar to 2.32)
+**Question:** Express the shaded region in terms of sets A, B, C:
+(Region: A and C but not B)
+
+**Solution:**
+```
+The shaded region = (A ∩ C) - B
+                  = (A ∩ C) ∩ Bᶜ
+                  = A ∩ C ∩ Bᶜ
+```
+
+---
+
+### Problem: Partial Order (Similar to 2.33)
+**Question:** Show that real numbers with "≤" form a partially ordered set.
+
+**Solution:**
+```
+Need to prove: reflexive, transitive, antisymmetric
+
+1. Reflexive: For any a, a ≤ a  ✓ (equals itself)
+
+2. Transitive: If a ≤ b and b ≤ c, then a ≤ c  ✓
+
+3. Antisymmetric: If a ≤ b and b ≤ a, then a = b  ✓
+
+All three properties hold, so (ℝ, ≤) is a partially ordered set.
+```
+
+---
+
+### Problem: Inverse Transformations (Similar to 2.37)
+**Question:** Find the inverse of rotation transformation.
+
+**Solution:**
+```
+Rotation matrix R(θ):
+[cosθ  -sinθ  0]
+[sinθ   cosθ  0]
+[0      0     1]
+
+Inverse R⁻¹(θ) = R(-θ):
+[cos(-θ)  -sin(-θ)  0]   [cosθ   sinθ  0]
+[sin(-θ)   cos(-θ)  0] = [-sinθ  cosθ  0]
+[0         0        1]   [0      0     1]
+
+Verification: R(θ) × R(-θ) = I (identity)
+```
+
+---
+
+### Problem: Separable Transforms (Similar to 2.40)
+**Question:** Prove that 2-D DFT is separable.
+
+**Solution:**
+```
+2-D DFT:
+F(u,v) = Σx Σy f(x,y) × e^(-j2π(ux/M + vy/N))
+
+Separating the exponentials:
+= Σx Σy f(x,y) × e^(-j2πux/M) × e^(-j2πvy/N)
+
+= Σx [e^(-j2πux/M) × Σy f(x,y) × e^(-j2πvy/N)]
+
+Let G(x,v) = Σy f(x,y) × e^(-j2πvy/N)  (1-D DFT along rows)
+
+Then:
+F(u,v) = Σx G(x,v) × e^(-j2πux/M)     (1-D DFT along columns)
+
+Therefore, 2-D DFT can be computed as:
+1. 1-D DFT along each row → G(x,v)
+2. 1-D DFT along each column of G → F(u,v)
+```
 
 ---
 
