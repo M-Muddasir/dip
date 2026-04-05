@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIP Exam Preparation - Chapters 1 & 2</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        nav h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .nav-links a.chapter2 {
+            background: linear-gradient(135deg, var(--secondary) 0%, #6d28d9 100%);
+        }
+
+        .nav-links a.practice {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+        }
+
+        /* Sections */
+        section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        section h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        section h2.chapter2 {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+        }
+
+        section h3 {
+            color: var(--dark);
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+            padding: 10px 15px;
+            background: linear-gradient(90deg, var(--light) 0%, transparent 100%);
+            border-left: 4px solid var(--primary);
+            border-radius: 0 10px 10px 0;
+        }
+
+        section h3.chapter2 {
+            border-left-color: var(--secondary);
+        }
+
+        section h4 {
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            margin: 20px 0 10px 0;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        th.chapter2 {
+            background: linear-gradient(135deg, var(--secondary) 0%, #6d28d9 100%);
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        tr:hover {
+            background-color: #eff6ff;
+        }
+
+        /* Formula boxes */
+        .formula-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid var(--warning);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+
+        .formula-box.important {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: var(--danger);
+        }
+
+        .formula-box.success {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: var(--success);
+        }
+
+        .formula-box h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Code blocks */
+        pre, code {
+            font-family: 'Courier New', Consolas, monospace;
+            background: #1f2937;
+            color: #e5e7eb;
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+
+        pre {
+            padding: 20px;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+
+        code {
+            padding: 2px 6px;
+            font-size: 0.9rem;
+        }
+
+        /* Definition boxes */
+        .definition {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 15px 15px 0;
+        }
+
+        .definition.chapter2 {
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            border-left-color: var(--secondary);
+        }
+
+        .definition strong {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .definition.chapter2 strong {
+            color: var(--secondary);
+        }
+
+        /* Key points */
+        .key-point {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px dashed var(--warning);
+        }
+
+        .key-point h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* MCQ styling */
+        .mcq {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid #e5e7eb;
+        }
+
+        .mcq-question {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .mcq-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .mcq-option {
+            padding: 12px 15px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mcq-option:hover {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .mcq-option.correct {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: var(--success);
+        }
+
+        .mcq-option.correct::after {
+            content: ' ✓';
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Diagram boxes */
+        .diagram {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 15px 0 15px 25px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        /* Highlighted text */
+        .highlight {
+            background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        /* Cards grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card.chapter2 h4 {
+            color: var(--secondary);
+        }
+
+        /* Problem solution */
+        .problem {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #e5e7eb;
+        }
+
+        .problem h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .problem .question {
+            background: #eff6ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .problem .solution {
+            background: #d1fae5;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--success);
+        }
+
+        .problem .solution h5 {
+            color: #065f46;
+            margin-bottom: 10px;
+        }
+
+        /* Quick reference */
+        .quick-ref {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .quick-ref h3 {
+            color: #fde68a;
+            background: none;
+            border-left: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .quick-ref code {
+            background: #374151;
+            color: #fde68a;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            nav {
+                display: none;
+            }
+
+            section {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Tab system */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: #e5e7eb;
+            color: var(--dark);
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            background: #d1d5db;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-btn.active.chapter2 {
+            background: var(--secondary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 0 15px 15px 15px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Digital Image Processing</h1>
+            <p>Exam Preparation Guide - Chapters 1 & 2</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Gonzalez & Woods, 4th Edition</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav>
+            <h3>Quick Navigation</h3>
+            <div class="nav-links">
+                <a href="#ch1-intro">Ch1: Introduction</a>
+                <a href="#ch1-history">History</a>
+                <a href="#ch1-applications">Applications</a>
+                <a href="#ch1-steps">Processing Steps</a>
+                <a href="#ch2-visual" class="chapter2">Ch2: Visual Perception</a>
+                <a href="#ch2-em" class="chapter2">EM Spectrum</a>
+                <a href="#ch2-sampling" class="chapter2">Sampling</a>
+                <a href="#ch2-pixels" class="chapter2">Pixel Relations</a>
+                <a href="#ch2-math" class="chapter2">Math Tools</a>
+                <a href="#formulas" class="practice">Formulas</a>
+                <a href="#mcq" class="practice">MCQs</a>
+                <a href="#problems" class="practice">Problems</a>
+            </div>
+        </nav>
+
+        <!-- Chapter 1: Introduction -->
+        <section id="ch1-intro">
+            <h2>Chapter 1: Introduction</h2>
+
+            <h3>1.1 What is Digital Image Processing?</h3>
+
+            <div class="definition">
+                <strong>Digital Image:</strong> A two-dimensional function f(x, y) where x and y are spatial coordinates, and the amplitude of f at any point (x, y) is called the <span class="highlight">intensity</span> or <span class="highlight">gray level</span>. When x, y, and intensity values are all finite, discrete quantities → digital image.
+            </div>
+
+            <div class="definition">
+                <strong>Digital Image Processing:</strong> Processing digital images by means of a digital computer.
+            </div>
+
+            <div class="key-point">
+                <h4>📌 Key Terms</h4>
+                <p>Elements of a digital image are called: <strong>picture elements</strong>, <strong>image elements</strong>, <strong>pels</strong>, or <strong>pixels</strong></p>
+            </div>
+
+            <h4>Three Levels of Image Processing</h4>
+            <table>
+                <tr>
+                    <th>Level</th>
+                    <th>Input</th>
+                    <th>Output</th>
+                    <th>Examples</th>
+                </tr>
+                <tr>
+                    <td><strong>Low-level</strong></td>
+                    <td>Image</td>
+                    <td>Image</td>
+                    <td>Noise reduction, contrast enhancement, sharpening</td>
+                </tr>
+                <tr>
+                    <td><strong>Mid-level</strong></td>
+                    <td>Image</td>
+                    <td>Attributes</td>
+                    <td>Segmentation, classification, object recognition</td>
+                </tr>
+                <tr>
+                    <td><strong>High-level</strong></td>
+                    <td>Attributes</td>
+                    <td>Understanding</td>
+                    <td>Scene understanding, cognitive functions</td>
+                </tr>
+            </table>
+
+            <div class="diagram">
+Image Processing ◄────────────────────────────► Computer Vision
+       │                    │                         │
+   Low-level            Mid-level                High-level
+   (Images)            (Attributes)            (Understanding)
+            </div>
+        </section>
+
+        <!-- Chapter 1: History -->
+        <section id="ch1-history">
+            <h2>1.2 Origins of Digital Image Processing</h2>
+
+            <h3>Historical Timeline</h3>
+            <table>
+                <tr>
+                    <th>Year</th>
+                    <th>Milestone</th>
+                    <th>Significance</th>
+                </tr>
+                <tr>
+                    <td><strong>1920s</strong></td>
+                    <td>Bartlane cable picture transmission</td>
+                    <td>First digital images transmitted London → New York</td>
+                </tr>
+                <tr>
+                    <td><strong>1921</strong></td>
+                    <td>First Bartlane picture</td>
+                    <td>Used 5 distinct intensity levels</td>
+                </tr>
+                <tr>
+                    <td><strong>1929</strong></td>
+                    <td>Improved Bartlane</td>
+                    <td>Increased to 15 intensity levels</td>
+                </tr>
+                <tr>
+                    <td><strong>1964</strong></td>
+                    <td>Ranger 7 mission</td>
+                    <td>First US spacecraft images of Moon (JPL)</td>
+                </tr>
+                <tr>
+                    <td><strong>1970s</strong></td>
+                    <td>CT Scanner invented</td>
+                    <td>Godfrey N. Hounsfield</td>
+                </tr>
+                <tr>
+                    <td><strong>1979</strong></td>
+                    <td>Nobel Prize</td>
+                    <td>Hounsfield & Cormack for CT</td>
+                </tr>
+            </table>
+
+            <div class="key-point">
+                <h4>🎯 Exam Important Facts</h4>
+                <ul>
+                    <li>First digital picture transmission: <strong>1920s</strong> via submarine cable (Bartlane system)</li>
+                    <li>Initial intensity levels: <strong>5 levels</strong>, later improved to <strong>15 levels</strong></li>
+                    <li>Space imaging breakthrough: <strong>1964</strong>, Ranger 7 lunar mission</li>
+                    <li>X-rays discovered: <strong>1895</strong> by Wilhelm Röntgen (Nobel 1901)</li>
+                    <li>CT scanner: <strong>1970s</strong> by Hounsfield (Nobel 1979)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Chapter 1: Applications -->
+        <section id="ch1-applications">
+            <h2>1.3 Examples of Fields Using Digital Image Processing</h2>
+
+            <h3>Electromagnetic Spectrum Applications</h3>
+
+            <div class="diagram">
+Energy:  HIGH ◄─────────────────────────────────────────► LOW
+
+         Gamma → X-rays → UV → Visible → IR → Microwave → Radio
+           │       │       │      │       │       │         │
+          PET    CT/Med  Micro  Camera  Thermal  Radar     MRI
+         SPECT  Industry  Litho  Remote  Night    SAR
+         Astro           Fluor  Sensing  Vision
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>☢️ Gamma-Ray Imaging</h4>
+                    <ul>
+                        <li>PET (Positron Emission Tomography)</li>
+                        <li>SPECT imaging</li>
+                        <li>Astronomical observations</li>
+                        <li>Nuclear medicine</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🩻 X-Ray Imaging</h4>
+                    <ul>
+                        <li>Medical diagnostics</li>
+                        <li>CT scanning</li>
+                        <li>Industrial inspection</li>
+                        <li>Angiography</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🔬 Ultraviolet Imaging</h4>
+                    <ul>
+                        <li>Fluorescence microscopy</li>
+                        <li>Semiconductor lithography</li>
+                        <li>Document verification</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>📷 Visible Light</h4>
+                    <ul>
+                        <li>Photography</li>
+                        <li>Remote sensing</li>
+                        <li>Microscopy</li>
+                        <li>Surveillance</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🌡️ Infrared Imaging</h4>
+                    <ul>
+                        <li>Thermal imaging</li>
+                        <li>Night vision</li>
+                        <li>Weather forecasting</li>
+                        <li>Medical thermography</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>📡 Microwave & Radio</h4>
+                    <ul>
+                        <li>Radar imaging</li>
+                        <li>SAR (Synthetic Aperture Radar)</li>
+                        <li>MRI (uses radio waves)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>Non-Electromagnetic Imaging</h4>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Principle</th>
+                    <th>Applications</th>
+                </tr>
+                <tr>
+                    <td><strong>Ultrasound</strong></td>
+                    <td>Sound waves (2-20 MHz)</td>
+                    <td>Medical imaging, fetal monitoring</td>
+                </tr>
+                <tr>
+                    <td><strong>Electron Microscopy</strong></td>
+                    <td>Electron beams</td>
+                    <td>Nanoscale imaging</td>
+                </tr>
+                <tr>
+                    <td><strong>Computer Graphics</strong></td>
+                    <td>Mathematical models</td>
+                    <td>Simulation, visualization</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Chapter 1: Processing Steps -->
+        <section id="ch1-steps">
+            <h2>1.4 Fundamental Steps in Digital Image Processing</h2>
+
+            <div class="diagram">
+┌─────────────────────────────────────────────────────────────────────┐
+│                    IMAGE PROCESSING PIPELINE                         │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│   ┌────────────┐    ┌────────────┐    ┌────────────┐               │
+│   │   Image    │───►│   Image    │───►│   Image    │               │
+│   │Acquisition │    │Enhancement │    │Restoration │               │
+│   └────────────┘    └────────────┘    └────────────┘               │
+│         │                                    │                       │
+│         ▼                                    ▼                       │
+│   ┌────────────┐    ┌────────────┐    ┌────────────┐               │
+│   │   Color    │───►│  Wavelets  │───►│Compression │               │
+│   │ Processing │    │ &Transforms│    │            │               │
+│   └────────────┘    └────────────┘    └────────────┘               │
+│         │                                    │                       │
+│         ▼                                    ▼                       │
+│   ┌────────────┐    ┌────────────┐    ┌────────────┐               │
+│   │Morphology  │───►│Segmentation│───►│Represent & │               │
+│   │ Processing │    │            │    │ Description│               │
+│   └────────────┘    └────────────┘    └────────────┘               │
+│         │                                    │                       │
+│         ▼                                    ▼                       │
+│   ┌────────────┐    ┌────────────┐                                  │
+│   │  Feature   │───►│  Pattern   │      ┌──────────────────┐       │
+│   │ Extraction │    │Recognition │      │  Knowledge Base  │       │
+│   └────────────┘    └────────────┘      └──────────────────┘       │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>1. Image Acquisition</h4>
+                    <p>Capturing image using sensors (CCD, CMOS)</p>
+                </div>
+                <div class="card">
+                    <h4>2. Image Enhancement</h4>
+                    <p>Subjective improvement for specific applications</p>
+                </div>
+                <div class="card">
+                    <h4>3. Image Restoration</h4>
+                    <p>Objective recovery using degradation models</p>
+                </div>
+                <div class="card">
+                    <h4>4. Color Processing</h4>
+                    <p>Color models (RGB, HSI, CMYK)</p>
+                </div>
+                <div class="card">
+                    <h4>5. Wavelets</h4>
+                    <p>Multi-resolution representation</p>
+                </div>
+                <div class="card">
+                    <h4>6. Compression</h4>
+                    <p>Lossless (PNG) or Lossy (JPEG)</p>
+                </div>
+                <div class="card">
+                    <h4>7. Morphology</h4>
+                    <p>Shape extraction (erosion, dilation)</p>
+                </div>
+                <div class="card">
+                    <h4>8. Segmentation</h4>
+                    <p>Partitioning into regions/objects</p>
+                </div>
+                <div class="card">
+                    <h4>9. Feature Extraction</h4>
+                    <p>Shape, texture, color features</p>
+                </div>
+                <div class="card">
+                    <h4>10. Pattern Recognition</h4>
+                    <p>Classification using features</p>
+                </div>
+            </div>
+
+            <h3>1.5 Components of an Image Processing System</h3>
+            <table>
+                <tr>
+                    <th>Component</th>
+                    <th>Function</th>
+                    <th>Examples</th>
+                </tr>
+                <tr>
+                    <td><strong>Image Sensors</strong></td>
+                    <td>Convert light to electrical signals</td>
+                    <td>CCD, CMOS sensors</td>
+                </tr>
+                <tr>
+                    <td><strong>Specialized Hardware</strong></td>
+                    <td>High-speed specific operations</td>
+                    <td>Digitizers, frame grabbers</td>
+                </tr>
+                <tr>
+                    <td><strong>Computer</strong></td>
+                    <td>General-purpose processing</td>
+                    <td>PC, workstation</td>
+                </tr>
+                <tr>
+                    <td><strong>Software</strong></td>
+                    <td>Implement algorithms</td>
+                    <td>MATLAB, OpenCV</td>
+                </tr>
+                <tr>
+                    <td><strong>Storage</strong></td>
+                    <td>Store images and data</td>
+                    <td>RAM, HDD, SSD</td>
+                </tr>
+                <tr>
+                    <td><strong>Display</strong></td>
+                    <td>Visualize images</td>
+                    <td>LCD monitors</td>
+                </tr>
+                <tr>
+                    <td><strong>Network</strong></td>
+                    <td>Transmit images</td>
+                    <td>LAN, Internet</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Chapter 2: Visual Perception -->
+        <section id="ch2-visual">
+            <h2 class="chapter2">Chapter 2: Digital Image Fundamentals</h2>
+
+            <h3 class="chapter2">2.1 Elements of Visual Perception</h3>
+
+            <div class="diagram">
+                      CROSS-SECTION OF HUMAN EYE
+
+                           Vitreous humor
+                                │
+      Light ──────►  ┌─────────┼─────────┐
+                     │    ┌────┴────┐    │
+                Cornea    │         │    Retina
+                     │    │  Lens   │    │
+                     │    │         │    │◄── Fovea (center)
+                     │    └────┬────┘    │
+                     │         │         │
+                     │      Iris/Pupil   │
+                     │         │         │
+                     └─────────┼─────────┘
+                               │
+                          Optic Nerve ──► Brain
+            </div>
+
+            <h4>Eye Components</h4>
+            <table>
+                <tr>
+                    <th class="chapter2">Component</th>
+                    <th class="chapter2">Function</th>
+                </tr>
+                <tr><td><strong>Cornea</strong></td><td>Outer transparent membrane; provides most optical power</td></tr>
+                <tr><td><strong>Iris</strong></td><td>Colored part; controls pupil size</td></tr>
+                <tr><td><strong>Pupil</strong></td><td>Opening in iris; controls light amount</td></tr>
+                <tr><td><strong>Lens</strong></td><td>Focuses light onto retina; adjustable focal length</td></tr>
+                <tr><td><strong>Retina</strong></td><td>Contains photoreceptors (rods & cones)</td></tr>
+                <tr><td><strong>Fovea</strong></td><td>Central pit; highest visual acuity</td></tr>
+            </table>
+
+            <h4>Photoreceptors: Rods vs Cones</h4>
+            <table>
+                <tr>
+                    <th class="chapter2">Property</th>
+                    <th class="chapter2">Cones</th>
+                    <th class="chapter2">Rods</th>
+                </tr>
+                <tr><td><strong>Number</strong></td><td>6-7 million</td><td>75-150 million</td></tr>
+                <tr><td><strong>Location</strong></td><td>Concentrated in fovea</td><td>Distributed throughout retina</td></tr>
+                <tr><td><strong>Absent from</strong></td><td>Extreme periphery</td><td>Center of fovea</td></tr>
+                <tr><td><strong>Function</strong></td><td>Color vision, high acuity</td><td>Night vision, peripheral</td></tr>
+                <tr><td><strong>Light Sensitivity</strong></td><td>Low (photopic)</td><td>High (scotopic)</td></tr>
+                <tr><td><strong>Color Perception</strong></td><td>Yes (3 types: R,G,B)</td><td>No (monochromatic)</td></tr>
+                <tr><td><strong>Resolution</strong></td><td>High</td><td>Low</td></tr>
+            </table>
+
+            <div class="key-point">
+                <h4>📌 Important Values</h4>
+                <ul>
+                    <li><strong>Focal length of eye:</strong> ~17 mm (14-17 mm range)</li>
+                    <li><strong>Fovea dimensions:</strong> ~1.5 mm × 1.5 mm</li>
+                    <li><strong>Cone density in fovea:</strong> ~150,000 cones/mm²</li>
+                    <li><strong>Adaptation range:</strong> ~10¹⁰ (10 billion to 1)</li>
+                    <li><strong>Simultaneous discrimination:</strong> ~100 intensity levels</li>
+                </ul>
+            </div>
+
+            <h4>Weber Ratio and Just Noticeable Difference (JND)</h4>
+            <div class="formula-box important">
+                <h4>Weber's Law</h4>
+                <code>ΔI_c / I ≈ 0.02</code> (at moderate intensities)
+                <p style="margin-top: 10px; font-family: sans-serif;">
+                    Where: ΔI_c = just noticeable intensity difference, I = background intensity
+                </p>
+                <p style="font-family: sans-serif;"><strong>Meaning:</strong> Eye can detect ~2% change in intensity</p>
+            </div>
+
+            <h4>Important Visual Phenomena</h4>
+            <div class="cards-grid">
+                <div class="card chapter2">
+                    <h4>Mach Bands</h4>
+                    <p><strong>Definition:</strong> Apparent bright/dark bands at intensity transitions that don't physically exist</p>
+                    <p><strong>Cause:</strong> Lateral inhibition in retina</p>
+                    <p><strong>Significance:</strong> Perception ≠ Physical reality</p>
+                </div>
+                <div class="card chapter2">
+                    <h4>Simultaneous Contrast</h4>
+                    <p><strong>Definition:</strong> Same gray appears different against different backgrounds</p>
+                    <p><strong>Cause:</strong> Relative intensity processing</p>
+                    <p><strong>Significance:</strong> Absolute judgments unreliable</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 2: EM Spectrum -->
+        <section id="ch2-em">
+            <h3 class="chapter2">2.2 Light and the Electromagnetic Spectrum</h3>
+
+            <div class="formula-box">
+                <h4>Wavelength-Frequency Relationship</h4>
+                <code>λ = c / ν</code>
+                <p style="margin-top: 10px; font-family: sans-serif;">
+                    Where: λ = wavelength (m), c = speed of light = <strong>3 × 10⁸ m/s</strong>, ν = frequency (Hz)
+                </p>
+            </div>
+
+            <h4>Visible Light Spectrum</h4>
+            <table>
+                <tr>
+                    <th class="chapter2">Color</th>
+                    <th class="chapter2">Wavelength (nm)</th>
+                </tr>
+                <tr><td style="background: #8B00FF; color: white;">Violet</td><td>380-450</td></tr>
+                <tr><td style="background: #0000FF; color: white;">Blue</td><td>450-490</td></tr>
+                <tr><td style="background: #00FF00;">Green</td><td>490-560</td></tr>
+                <tr><td style="background: #FFFF00;">Yellow</td><td>560-590</td></tr>
+                <tr><td style="background: #FFA500;">Orange</td><td>590-630</td></tr>
+                <tr><td style="background: #FF0000; color: white;">Red</td><td>630-700</td></tr>
+            </table>
+
+            <h3 class="chapter2">2.3 Image Sensing and Acquisition</h3>
+
+            <div class="formula-box important">
+                <h4>Image Formation Model</h4>
+                <code>f(x, y) = i(x, y) × r(x, y)</code>
+                <p style="margin-top: 10px; font-family: sans-serif;">
+                    <strong>f(x,y)</strong> = Image intensity<br>
+                    <strong>i(x,y)</strong> = Illumination (0, ∞) - light source<br>
+                    <strong>r(x,y)</strong> = Reflectance (0, 1) - object property
+                </p>
+            </div>
+
+            <h4>Typical Values</h4>
+            <table>
+                <tr>
+                    <th class="chapter2">Illumination i(x,y)</th>
+                    <th class="chapter2">Value (lm/m²)</th>
+                </tr>
+                <tr><td>Bright sunny day</td><td>~90,000</td></tr>
+                <tr><td>Cloudy day</td><td>~10,000</td></tr>
+                <tr><td>Full moon</td><td>~0.1</td></tr>
+            </table>
+
+            <table>
+                <tr>
+                    <th class="chapter2">Reflectance r(x,y)</th>
+                    <th class="chapter2">Value</th>
+                </tr>
+                <tr><td>Black velvet</td><td>0.01</td></tr>
+                <tr><td>Stainless steel</td><td>0.65</td></tr>
+                <tr><td>Snow</td><td>0.93</td></tr>
+            </table>
+        </section>
+
+        <!-- Chapter 2: Sampling -->
+        <section id="ch2-sampling">
+            <h3 class="chapter2">2.4 Image Sampling and Quantization</h3>
+
+            <div class="definition chapter2">
+                <strong>Sampling:</strong> Digitizing spatial coordinates (x, y)<br>
+                <strong>Quantization:</strong> Digitizing intensity values
+            </div>
+
+            <div class="diagram">
+Continuous Image ──► Sampling ──► Quantization ──► Digital Image
+     f(x,y)         (M × N)       (k bits)         f[x,y]
+            </div>
+
+            <div class="formula-box success">
+                <h4>Storage Requirements</h4>
+                <code>b = M × N × k bits</code>
+                <p style="margin-top: 10px; font-family: sans-serif;">
+                    M = rows, N = columns, k = bits/pixel<br>
+                    <strong>Gray levels:</strong> L = 2<sup>k</sup><br>
+                    <strong>Intensity range:</strong> [0, L-1]
+                </p>
+            </div>
+
+            <h4>Standard Image Sizes</h4>
+            <table>
+                <tr>
+                    <th class="chapter2">Name</th>
+                    <th class="chapter2">Dimensions</th>
+                    <th class="chapter2">8-bit Storage</th>
+                </tr>
+                <tr><td>VGA</td><td>640 × 480</td><td>300 KB</td></tr>
+                <tr><td>HD 720p</td><td>1280 × 720</td><td>900 KB</td></tr>
+                <tr><td>HD 1080p</td><td>1920 × 1080</td><td>2 MB</td></tr>
+                <tr><td>4K UHD</td><td>3840 × 2160</td><td>8 MB</td></tr>
+            </table>
+
+            <div class="formula-box important">
+                <h4>Nyquist Sampling Theorem</h4>
+                <code>f<sub>sampling</sub> ≥ 2 × f<sub>max</sub></code>
+                <p style="margin-top: 10px; font-family: sans-serif;">
+                    To avoid <strong>aliasing</strong>, sample at least 2× the highest frequency
+                </p>
+            </div>
+
+            <div class="key-point">
+                <h4>⚠️ Common Problems</h4>
+                <ul>
+                    <li><strong>Aliasing:</strong> Undersampling → wrong frequencies appear</li>
+                    <li><strong>False Contouring:</strong> Few gray levels → artificial edges in smooth regions</li>
+                </ul>
+            </div>
+
+            <h4>Interpolation Methods</h4>
+            <table>
+                <tr>
+                    <th class="chapter2">Method</th>
+                    <th class="chapter2">Neighbors</th>
+                    <th class="chapter2">Quality</th>
+                    <th class="chapter2">Speed</th>
+                </tr>
+                <tr><td><strong>Nearest Neighbor</strong></td><td>1</td><td>Low (blocky)</td><td>Fastest</td></tr>
+                <tr><td><strong>Bilinear</strong></td><td>4</td><td>Medium</td><td>Medium</td></tr>
+                <tr><td><strong>Bicubic</strong></td><td>16</td><td>High (smooth)</td><td>Slowest</td></tr>
+            </table>
+        </section>
+
+        <!-- Chapter 2: Pixel Relationships -->
+        <section id="ch2-pixels">
+            <h3 class="chapter2">2.5 Some Basic Relationships Between Pixels</h3>
+
+            <h4>Neighbors of a Pixel at (x, y)</h4>
+            <div class="diagram">
+   4-Neighbors (N₄):              8-Neighbors (N₈):           Diagonal (N_D):
+
+        (x-1,y)                  (x-1,y-1)(x-1,y)(x-1,y+1)    (x-1,y-1)  (x-1,y+1)
+           │                         │       │       │            ╲         ╱
+   (x,y-1)─┼─(x,y+1)         (x,y-1)─┼───────┼───────┼─(x,y+1)      ╲     ╱
+           │                         │   p   │       │                ╲ ╱
+        (x+1,y)                  (x+1,y-1)(x+1,y)(x+1,y+1)            ╱ ╲
+                                                                    ╱     ╲
+                                                              (x+1,y-1)  (x+1,y+1)
+            </div>
+
+            <h4>Adjacency Types (with value set V)</h4>
+            <table>
+                <tr>
+                    <th class="chapter2">Type</th>
+                    <th class="chapter2">Definition</th>
+                    <th class="chapter2">Use</th>
+                </tr>
+                <tr>
+                    <td><strong>4-Adjacency</strong></td>
+                    <td>q ∈ N₄(p) and both values ∈ V</td>
+                    <td>Strict connectivity</td>
+                </tr>
+                <tr>
+                    <td><strong>8-Adjacency</strong></td>
+                    <td>q ∈ N₈(p) and both values ∈ V</td>
+                    <td>General connectivity</td>
+                </tr>
+                <tr>
+                    <td><strong>m-Adjacency</strong></td>
+                    <td>q ∈ N₄(p), OR q ∈ N_D(p) AND N₄(p)∩N₄(q) has no V pixels</td>
+                    <td>Eliminates path ambiguity</td>
+                </tr>
+            </table>
+
+            <h4>Distance Measures</h4>
+            <div class="formula-box">
+                <h4>For pixels p=(x,y) and q=(s,t)</h4>
+                <p><strong>Euclidean:</strong> <code>D_e = √[(x-s)² + (y-t)²]</code></p>
+                <p><strong>City-block (D₄):</strong> <code>D₄ = |x-s| + |y-t|</code></p>
+                <p><strong>Chessboard (D₈):</strong> <code>D₈ = max(|x-s|, |y-t|)</code></p>
+            </div>
+
+            <div class="diagram">
+Distance from center pixel:
+
+Euclidean:           City-block (D₄):      Chessboard (D₈):
+┌─────┬─────┬─────┐  ┌─────┬─────┬─────┐  ┌─────┬─────┬─────┐
+│ 1.4 │  1  │ 1.4 │  │  2  │  1  │  2  │  │  1  │  1  │  1  │
+├─────┼─────┼─────┤  ├─────┼─────┼─────┤  ├─────┼─────┼─────┤
+│  1  │  0  │  1  │  │  1  │  0  │  1  │  │  1  │  0  │  1  │
+├─────┼─────┼─────┤  ├─────┼─────┼─────┤  ├─────┼─────┼─────┤
+│ 1.4 │  1  │ 1.4 │  │  2  │  1  │  2  │  │  1  │  1  │  1  │
+└─────┴─────┴─────┘  └─────┴─────┴─────┘  └─────┴─────┴─────┘
+            </div>
+        </section>
+
+        <!-- Chapter 2: Mathematical Tools -->
+        <section id="ch2-math">
+            <h3 class="chapter2">2.6 Introduction to Mathematical Tools</h3>
+
+            <h4>Linear vs Nonlinear Operations</h4>
+            <div class="formula-box">
+                <h4>Linear Operation Definition</h4>
+                <code>H[a₁f₁ + a₂f₂] = a₁H[f₁] + a₂H[f₂]</code>
+                <p style="margin-top: 10px; font-family: sans-serif;">
+                    Requires: <strong>Additivity</strong> + <strong>Homogeneity</strong>
+                </p>
+            </div>
+
+            <table>
+                <tr>
+                    <th class="chapter2">Linear Operations</th>
+                    <th class="chapter2">Nonlinear Operations</th>
+                </tr>
+                <tr><td>Addition</td><td>Multiplication</td></tr>
+                <tr><td>Subtraction</td><td>Division</td></tr>
+                <tr><td>Scaling (×constant)</td><td>Median filtering</td></tr>
+                <tr><td>Averaging</td><td>Max/Min operations</td></tr>
+            </table>
+
+            <h4>Noise Reduction by Averaging</h4>
+            <div class="formula-box success">
+                <h4>Averaging K Noisy Images</h4>
+                <code>ḡ(x,y) = (1/K) × Σ g<sub>i</sub>(x,y)</code>
+                <p style="margin-top: 10px; font-family: sans-serif;">
+                    <strong>Result:</strong> σ²<sub>avg</sub> = σ²/K<br>
+                    <strong>SNR improvement:</strong> √K times
+                </p>
+            </div>
+
+            <h4>Set Operations & DeMorgan's Laws</h4>
+            <div class="formula-box important">
+                <h4>DeMorgan's Laws</h4>
+                <code>(A ∪ B)ᶜ = Aᶜ ∩ Bᶜ</code><br>
+                <code>(A ∩ B)ᶜ = Aᶜ ∪ Bᶜ</code>
+            </div>
+
+            <h4>Logical Operations (Binary Images)</h4>
+            <table>
+                <tr>
+                    <th class="chapter2">a</th>
+                    <th class="chapter2">b</th>
+                    <th class="chapter2">AND</th>
+                    <th class="chapter2">OR</th>
+                    <th class="chapter2">XOR</th>
+                    <th class="chapter2">NOT a</th>
+                </tr>
+                <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+                <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+            </table>
+
+            <h4>Geometric Transformations</h4>
+            <div class="formula-box">
+                <h4>Homogeneous Coordinates</h4>
+                <pre style="background: transparent; color: inherit; padding: 0;">
+[x']   [a₁₁  a₁₂  a₁₃] [x]
+[y'] = [a₂₁  a₂₂  a₂₃] [y]
+[1 ]   [0    0    1  ] [1]</pre>
+            </div>
+
+            <table>
+                <tr>
+                    <th class="chapter2">Transform</th>
+                    <th class="chapter2">Matrix</th>
+                    <th class="chapter2">Effect</th>
+                </tr>
+                <tr>
+                    <td><strong>Scaling</strong></td>
+                    <td><code>[s<sub>x</sub>, 0, 0; 0, s<sub>y</sub>, 0; 0, 0, 1]</code></td>
+                    <td>x' = s<sub>x</sub>·x, y' = s<sub>y</sub>·y</td>
+                </tr>
+                <tr>
+                    <td><strong>Translation</strong></td>
+                    <td><code>[1, 0, t<sub>x</sub>; 0, 1, t<sub>y</sub>; 0, 0, 1]</code></td>
+                    <td>x' = x + t<sub>x</sub>, y' = y + t<sub>y</sub></td>
+                </tr>
+                <tr>
+                    <td><strong>Rotation</strong></td>
+                    <td><code>[cosθ, -sinθ, 0; sinθ, cosθ, 0; 0, 0, 1]</code></td>
+                    <td>Rotate by θ counterclockwise</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Formula Sheet -->
+        <section id="formulas">
+            <h2 style="color: var(--success); border-bottom-color: var(--success);">📋 Formula Sheet</h2>
+
+            <div class="quick-ref">
+                <h3>Must-Remember Formulas</h3>
+                <div class="cards-grid" style="color: white;">
+                    <div style="background: #374151; padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #fde68a;">EM Spectrum</h4>
+                        <code>λ = c/ν</code><br>
+                        <small>c = 3×10⁸ m/s</small>
+                    </div>
+                    <div style="background: #374151; padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #fde68a;">Image Formation</h4>
+                        <code>f(x,y) = i(x,y) × r(x,y)</code>
+                    </div>
+                    <div style="background: #374151; padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #fde68a;">Storage</h4>
+                        <code>b = M × N × k bits</code><br>
+                        <code>L = 2<sup>k</sup> levels</code>
+                    </div>
+                    <div style="background: #374151; padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #fde68a;">Nyquist</h4>
+                        <code>f<sub>s</sub> ≥ 2 × f<sub>max</sub></code>
+                    </div>
+                    <div style="background: #374151; padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #fde68a;">Distances</h4>
+                        <code>D<sub>e</sub> = √[(x-s)²+(y-t)²]</code><br>
+                        <code>D₄ = |x-s| + |y-t|</code><br>
+                        <code>D₈ = max(|x-s|,|y-t|)</code>
+                    </div>
+                    <div style="background: #374151; padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #fde68a;">Noise Reduction</h4>
+                        <code>σ²<sub>avg</sub> = σ²/K</code><br>
+                        <code>SNR ↑ by √K</code>
+                    </div>
+                    <div style="background: #374151; padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #fde68a;">Weber Ratio</h4>
+                        <code>ΔI<sub>c</sub>/I ≈ 0.02</code>
+                    </div>
+                    <div style="background: #374151; padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #fde68a;">DeMorgan</h4>
+                        <code>(A∪B)ᶜ = Aᶜ∩Bᶜ</code><br>
+                        <code>(A∩B)ᶜ = Aᶜ∪Bᶜ</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MCQ Section -->
+        <section id="mcq">
+            <h2 style="color: var(--success); border-bottom-color: var(--success);">✅ Multiple Choice Questions</h2>
+
+            <div class="mcq">
+                <div class="mcq-question">1. The first digital images were transmitted using the:</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(a) Wireless telegraph</div>
+                    <div class="mcq-option correct">(b) Bartlane cable picture transmission system</div>
+                    <div class="mcq-option">(c) Satellite communication</div>
+                    <div class="mcq-option">(d) Fiber optic cable</div>
+                </div>
+            </div>
+
+            <div class="mcq">
+                <div class="mcq-question">2. Low-level image processing produces:</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(a) Attributes from images</div>
+                    <div class="mcq-option correct">(b) Images from images</div>
+                    <div class="mcq-option">(c) Understanding from images</div>
+                    <div class="mcq-option">(d) Images from attributes</div>
+                </div>
+            </div>
+
+            <div class="mcq">
+                <div class="mcq-question">3. MRI imaging uses:</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(a) X-rays</div>
+                    <div class="mcq-option">(b) Gamma rays</div>
+                    <div class="mcq-option">(c) Infrared</div>
+                    <div class="mcq-option correct">(d) Radio waves</div>
+                </div>
+            </div>
+
+            <div class="mcq">
+                <div class="mcq-question">4. The fovea contains primarily:</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(a) Rods only</div>
+                    <div class="mcq-option correct">(b) Cones only</div>
+                    <div class="mcq-option">(c) Equal rods and cones</div>
+                    <div class="mcq-option">(d) Neither</div>
+                </div>
+            </div>
+
+            <div class="mcq">
+                <div class="mcq-question">5. The Weber ratio at moderate intensities is approximately:</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(a) 0.002</div>
+                    <div class="mcq-option correct">(b) 0.02</div>
+                    <div class="mcq-option">(c) 0.2</div>
+                    <div class="mcq-option">(d) 2.0</div>
+                </div>
+            </div>
+
+            <div class="mcq">
+                <div class="mcq-question">6. An 8-bit image has how many gray levels?</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(a) 8</div>
+                    <div class="mcq-option">(b) 64</div>
+                    <div class="mcq-option">(c) 128</div>
+                    <div class="mcq-option correct">(d) 256</div>
+                </div>
+            </div>
+
+            <div class="mcq">
+                <div class="mcq-question">7. According to Nyquist theorem, to avoid aliasing:</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(a) f<sub>s</sub> = f<sub>max</sub></div>
+                    <div class="mcq-option correct">(b) f<sub>s</sub> ≥ 2×f<sub>max</sub></div>
+                    <div class="mcq-option">(c) f<sub>s</sub> ≤ 2×f<sub>max</sub></div>
+                    <div class="mcq-option">(d) f<sub>s</sub> = f<sub>max</sub>/2</div>
+                </div>
+            </div>
+
+            <div class="mcq">
+                <div class="mcq-question">8. The city-block distance between (0,0) and (3,4) is:</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(a) 5</div>
+                    <div class="mcq-option correct">(b) 7</div>
+                    <div class="mcq-option">(c) 4</div>
+                    <div class="mcq-option">(d) 3</td>
+                </div>
+            </div>
+
+            <div class="mcq">
+                <div class="mcq-question">9. Which operation is LINEAR?</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(a) Image multiplication</div>
+                    <div class="mcq-option">(b) Image division</div>
+                    <div class="mcq-option correct">(c) Image addition</div>
+                    <div class="mcq-option">(d) Finding median</div>
+                </div>
+            </div>
+
+            <div class="mcq">
+                <div class="mcq-question">10. Bilinear interpolation uses how many neighbors?</div>
+                <div class="mcq-options">
+                    <div class="mcq-option">(a) 1</div>
+                    <div class="mcq-option correct">(b) 4</div>
+                    <div class="mcq-option">(c) 8</div>
+                    <div class="mcq-option">(d) 16</div>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 30px; color: #6b7280;">
+                <em>More MCQs available in the complete markdown document</em>
+            </p>
+        </section>
+
+        <!-- Problems Section -->
+        <section id="problems">
+            <h2 style="color: var(--success); border-bottom-color: var(--success);">📝 Practice Problems</h2>
+
+            <div class="problem">
+                <h4>Problem 1: Storage Calculation</h4>
+                <div class="question">
+                    Calculate the storage required for a 1024×1024 grayscale image with 256 levels.
+                </div>
+                <div class="solution">
+                    <h5>Solution:</h5>
+                    <pre style="background: white; color: var(--dark);">
+k = log₂(256) = 8 bits per pixel
+Storage = M × N × k
+        = 1024 × 1024 × 8 bits
+        = 8,388,608 bits
+        = 1,048,576 bytes
+        = 1 MB</pre>
+                </div>
+            </div>
+
+            <div class="problem">
+                <h4>Problem 2: Distance Calculation</h4>
+                <div class="question">
+                    Calculate D<sub>e</sub>, D₄, and D₈ between p=(2,5) and q=(7,2).
+                </div>
+                <div class="solution">
+                    <h5>Solution:</h5>
+                    <pre style="background: white; color: var(--dark);">
+D_e = √[(7-2)² + (2-5)²] = √[25 + 9] = √34 ≈ 5.83
+
+D₄ = |7-2| + |2-5| = 5 + 3 = 8
+
+D₈ = max(|7-2|, |2-5|) = max(5, 3) = 5</pre>
+                </div>
+            </div>
+
+            <div class="problem">
+                <h4>Problem 3: Noise Reduction</h4>
+                <div class="question">
+                    An image has noise with σ = 30. How many images must be averaged to reduce noise to σ ≤ 6?
+                </div>
+                <div class="solution">
+                    <h5>Solution:</h5>
+                    <pre style="background: white; color: var(--dark);">
+σ_avg = σ / √K
+6 = 30 / √K
+√K = 30/6 = 5
+K = 25 images</pre>
+                </div>
+            </div>
+
+            <div class="problem">
+                <h4>Problem 4: Wavelength Calculation</h4>
+                <div class="question">
+                    Calculate the wavelength of AC power at 60 Hz.
+                </div>
+                <div class="solution">
+                    <h5>Solution:</h5>
+                    <pre style="background: white; color: var(--dark);">
+λ = c / ν
+λ = (3 × 10⁸ m/s) / (60 Hz)
+λ = 5 × 10⁶ m
+λ = 5000 km</pre>
+                </div>
+            </div>
+
+            <div class="problem">
+                <h4>Problem 5: Transformation</h4>
+                <div class="question">
+                    Apply rotation by 90° counterclockwise to point P=(4, 3).
+                </div>
+                <div class="solution">
+                    <h5>Solution:</h5>
+                    <pre style="background: white; color: var(--dark);">
+Rotation 90°: cos(90°) = 0, sin(90°) = 1
+
+[x']   [0  -1  0] [4]   [0×4 + (-1)×3 + 0]   [-3]
+[y'] = [1   0  0] [3] = [1×4 + 0×3 + 0   ] = [4 ]
+[1 ]   [0   0  1] [1]   [0 + 0 + 1       ]   [1 ]
+
+Result: P' = (-3, 4)</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 30px; color: white; opacity: 0.9;">
+            <p>Digital Image Processing Exam Preparation</p>
+            <p>Chapters 1 & 2 - Gonzalez & Woods, 4th Edition</p>
+            <p style="margin-top: 15px;"><small>Good luck with your exam! 🎯</small></p>
+        </footer>
+    </div>
+
+    <script>
+        // Add click functionality to reveal answers in MCQs
+        document.querySelectorAll('.mcq-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const mcq = this.closest('.mcq');
+                mcq.querySelectorAll('.mcq-option').forEach(opt => {
+                    if (opt.classList.contains('correct')) {
+                        opt.style.background = 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)';
+                        opt.style.borderColor = '#10b981';
+                    }
+                });
+            });
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
