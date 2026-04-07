@@ -3165,6 +3165,269 @@ SNR improvement = √K
 
 ---
 
+# Python Code Examples for Geometric Transformations
+
+This section contains the Python implementations for image rotation and projective transformations as covered in the course.
+
+---
+
+## Image Rotation (t2-rotation.py)
+
+### Original Code (Exact as provided)
+
+```python
+from PIL import Image
+from numpy import array, zeros
+from matplotlib.pyplot import imshow, show, plot, title, subplot
+
+img1 = Image.open('parinnda300.jpg').convert('L')
+im1 = array(img1)
+rows = im1.shape[0]
+cols = im1.shape[1]
+
+sm = [[.866,-.5,0],[.5,.866,0], [0,0,1]]
+# sm is now rotation arrayrix and homogeneous
+
+tp = sm @ array([[rows],[cols],[1]])
+rowsd = int(tp[0,0])+200
+colsd = int(tp[1,0])+200
+
+im2 = array(zeros([rowsd, colsd]))
+
+r = 0
+while r < rows:
+    c = 0
+    while c < cols:
+        tp = sm @ array([[r],[c],[1]])
+        rd = int(tp[0,0])
+        cd = int(tp[1,0])
+        td = int(tp[2,0])  # td is always 1 for affine
+        if rd >=0 and cd >= 0:
+            im2[rd, cd] = im1[r,c]
+        c = c + 1
+    r = r + 1
+
+subplot(1, 2, 1)
+imshow(im1, cmap='gray')
+subplot(1, 2, 2)
+imshow(im2, cmap='gray')
+show()
+```
+
+### Explained Version (Line-by-line comments)
+
+```python
+# Import required libraries
+from PIL import Image                                    # PIL for image loading
+from numpy import array, zeros                          # NumPy for matrix operations
+from matplotlib.pyplot import imshow, show, plot, title, subplot  # For displaying images
+
+# Load and convert image to grayscale
+img1 = Image.open('parinnda300.jpg').convert('L')      # 'L' = grayscale mode
+im1 = array(img1)                                       # Convert to NumPy array
+rows = im1.shape[0]                                     # Get number of rows (height)
+cols = im1.shape[1]                                     # Get number of columns (width)
+
+# Rotation matrix for 30 degrees (cos(30°)=0.866, sin(30°)=0.5)
+# [cos θ   -sin θ   0]
+# [sin θ    cos θ   0]
+# [0        0       1]
+sm = [[.866,-.5,0],[.5,.866,0], [0,0,1]]               # 3x3 homogeneous rotation matrix
+
+# Calculate destination image size
+tp = sm @ array([[rows],[cols],[1]])                   # Transform corner point
+rowsd = int(tp[0,0])+200                               # Add padding for rotated image
+colsd = int(tp[1,0])+200                               # Add padding to avoid clipping
+
+# Create empty output image
+im2 = array(zeros([rowsd, colsd]))                     # Initialize with zeros (black)
+
+# Forward mapping: Transform each source pixel to destination
+r = 0
+while r < rows:                                         # Loop through each row
+    c = 0
+    while c < cols:                                     # Loop through each column
+        # Apply transformation matrix to current pixel
+        tp = sm @ array([[r],[c],[1]])                 # Matrix multiplication
+        rd = int(tp[0,0])                              # Destination row
+        cd = int(tp[1,0])                              # Destination column
+        td = int(tp[2,0])                              # Homogeneous coordinate (always 1 for affine)
+
+        # Only copy if destination is within bounds
+        if rd >=0 and cd >= 0:
+            im2[rd, cd] = im1[r,c]                     # Copy pixel value
+        c = c + 1                                       # Next column
+    r = r + 1                                           # Next row
+
+# Display original and rotated images side by side
+subplot(1, 2, 1)                                        # First subplot
+imshow(im1, cmap='gray')                               # Show original
+subplot(1, 2, 2)                                        # Second subplot
+imshow(im2, cmap='gray')                               # Show rotated
+show()                                                  # Display the figure
+```
+
+### Key Concepts - Rotation
+
+| Concept | Value | Explanation |
+|---------|-------|-------------|
+| Rotation Angle | 30° | cos(30°)=0.866, sin(30°)=0.5 |
+| Matrix Type | Affine | Preserves parallel lines |
+| Homogeneous Coord | 1 | Always 1 for affine transforms |
+| Mapping | Forward | Source → Destination (may cause holes) |
+
+---
+
+## Projective Transformation (t3-projection.py)
+
+### Original Code (Exact as provided)
+
+```python
+from PIL import Image
+from numpy import array, zeros
+from matplotlib.pyplot import imshow, show, plot, title, subplot
+
+img1 = Image.open('parinnda300.jpg').convert('L')
+im1 = array(img1)
+rows = im1.shape[0]
+cols = im1.shape[1]
+
+sm = array([[.8,.3,10],[-.7,.9,30], [0.0028,0.0036,1]])
+# sm is now projective arrayrix and homogeneous
+
+tp = sm @ array([[rows],[cols],[1]])
+rowsd = int(tp[0,0]/tp[2,0])+150
+colsd = int(tp[1,0]/tp[2,0])+150
+
+im2 = array(zeros([rowsd, colsd]))
+
+r = 0
+while r < rows:
+    c = 0
+    while c < cols:
+        tp = sm @ array([[r],[c],[1]])
+        rd = tp[0,0]
+        cd = tp[1,0]
+        td = tp[2,0]  # td is not 1 for projective
+
+        rd = int(rd/td)  # from homogeneous to cartesian
+        cd = int(cd/td)
+        td = int(td/td)
+
+        if rd >=0 and cd >= 0:
+            im2[rd, cd] = im1[r,c]
+        c = c + 1
+    r = r + 1
+
+subplot(1, 2, 1)
+imshow(im1, cmap='gray')
+subplot(1, 2, 2)
+imshow(im2, cmap='gray')
+show()
+
+img2 = Image.fromarray(im2.astype('uint8'),'L')
+img2.convert('RGB').save('my.jpg', "jpeg")
+```
+
+### Explained Version (Line-by-line comments)
+
+```python
+# Import required libraries
+from PIL import Image                                    # PIL for image loading/saving
+from numpy import array, zeros                          # NumPy for matrix operations
+from matplotlib.pyplot import imshow, show, plot, title, subplot  # For displaying
+
+# Load and convert image to grayscale
+img1 = Image.open('parinnda300.jpg').convert('L')      # Load as grayscale
+im1 = array(img1)                                       # Convert to NumPy array
+rows = im1.shape[0]                                     # Height
+cols = im1.shape[1]                                     # Width
+
+# Projective transformation matrix
+# [a  b  c ]    [0.8    0.3    10]
+# [d  e  f ] =  [-0.7   0.9    30]
+# [g  h  1 ]    [0.0028 0.0036 1 ]
+#
+# Key difference: Last row is NOT [0, 0, 1]!
+# g=0.0028 and h=0.0036 create perspective effect
+sm = array([[.8,.3,10],[-.7,.9,30], [0.0028,0.0036,1]])
+
+# Calculate destination size (divide by homogeneous coordinate!)
+tp = sm @ array([[rows],[cols],[1]])                   # Transform corner
+rowsd = int(tp[0,0]/tp[2,0])+150                       # MUST divide by w (tp[2,0])
+colsd = int(tp[1,0]/tp[2,0])+150                       # This is the key difference!
+
+# Create empty output image
+im2 = array(zeros([rowsd, colsd]))                     # Initialize black image
+
+# Forward mapping with perspective division
+r = 0
+while r < rows:                                         # Loop through source rows
+    c = 0
+    while c < cols:                                     # Loop through source columns
+        # Apply projective transformation
+        tp = sm @ array([[r],[c],[1]])                 # Matrix multiplication
+        rd = tp[0,0]                                    # x' (not yet Cartesian!)
+        cd = tp[1,0]                                    # y' (not yet Cartesian!)
+        td = tp[2,0]                                    # w (NOT always 1!)
+
+        # Convert from homogeneous to Cartesian coordinates
+        # This is CRITICAL for projective transforms!
+        rd = int(rd/td)                                 # x = x'/w
+        cd = int(cd/td)                                 # y = y'/w
+        td = int(td/td)                                 # w/w = 1
+
+        # Copy pixel if within bounds
+        if rd >=0 and cd >= 0:
+            im2[rd, cd] = im1[r,c]
+        c = c + 1
+    r = r + 1
+
+# Display results
+subplot(1, 2, 1)
+imshow(im1, cmap='gray')                               # Original
+subplot(1, 2, 2)
+imshow(im2, cmap='gray')                               # Transformed
+show()
+
+# Save result to file
+img2 = Image.fromarray(im2.astype('uint8'),'L')       # Convert array to image
+img2.convert('RGB').save('my.jpg', "jpeg")            # Save as JPEG
+```
+
+### Key Concepts - Projective Transformation
+
+| Concept | Value | Explanation |
+|---------|-------|-------------|
+| Matrix Size | 3×3 | 8 degrees of freedom (9 params, 1 normalized) |
+| Last Row | [g, h, 1] | g=0.0028, h=0.0036 create perspective |
+| Homogeneous Coord | Variable | w ≠ 1 (key difference from affine!) |
+| Perspective Division | Required | x = x'/w, y = y'/w |
+| Effect | Perspective | Does NOT preserve parallel lines |
+
+---
+
+## Comparison: Affine vs Projective
+
+| Feature | Affine (Rotation) | Projective |
+|---------|-------------------|------------|
+| Last row of matrix | [0, 0, 1] | [g, h, 1] where g,h ≠ 0 |
+| Homogeneous w | Always 1 | Varies with position |
+| Division by w | Not needed | Required! |
+| Parallel lines | Preserved | NOT preserved |
+| Use case | Rotation, scaling, shearing | 3D perspective, camera view |
+| DOF | 6 | 8 |
+
+## Exam Tips for Code Questions
+
+1. **Know the rotation matrix values**: cos(30°)=0.866, sin(30°)=0.5
+2. **Understand forward mapping**: Source pixel → Destination position
+3. **Key difference in projective**: Division by the homogeneous coordinate w
+4. **Matrix multiplication**: `tp = sm @ array([[r],[c],[1]])`
+5. **Why add padding**: Rotation can move pixels outside original bounds
+
+---
+
 **Good Luck with Your Exam!**
 
 ---
